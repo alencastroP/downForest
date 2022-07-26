@@ -30,6 +30,7 @@ let morte = false
 let grav = 4.1;
 let força = 0.2;
 let puloRange = 65;
+let volum = 0.02
   //mobs
 let atrasoMob = 0; 
 let contMob = 0;
@@ -87,7 +88,7 @@ function setup()
   createCanvas(400, 400);//taxa de atualização
   frameRate(60)//plano de fundo
   OST1.loop(); //Musica do menu em loop
-  OST1.setVolume(0.05); //volume da musica
+  OST1.setVolume(volum); //volume da musica
 }
   //animação de corrida
 function draw()
@@ -111,11 +112,11 @@ function draw()
     
     //Opcoes
         image(botao,150, 200, 100, 40)
-        text("Opcoes" , 171 , 225); 
+        text("Opcoes" , 170 , 225); 
     
     //Creditos
         image(botao,150, 250, 100, 40)
-        text("Creditos " , 166 , 275); 
+        text("Creditos " , 165 , 275); 
      
     }    
   //tela da cutscene
@@ -262,12 +263,12 @@ function draw()
       }
       image(pedra1, 340, 250, 30, 30)
       
-      if(contFase==2 && x>300)
+      if(contFase==2 && x>270)
       {
         chaoy = 230
    
       }
-      if(contFase==2 && x<300){
+      if(contFase==2 && x<270){
         chaoy=250
       }
 
@@ -288,12 +289,12 @@ function draw()
         j +=50
       }
 
-      if(contFase==3 && x>100)
+      if(contFase==3 && x>135)
       {
         chaoy = 250
    
       }
-      if(contFase==3 && x<100){
+      if(contFase==3 && x<135){
         chaoy=230
       }
     }
@@ -303,7 +304,7 @@ function draw()
     
   // animação de andar para direita
     if(keyIsDown(RIGHT_ARROW) && tela != 5){
-      x += 4;
+      x += 3;
       if( x > width) {
         x = 30
         contFase += 1
@@ -320,7 +321,7 @@ function draw()
       }
   // animação de andar para esquerda
     if(keyIsDown(LEFT_ARROW) && tela != 5){
-      x -= 4;
+      x -= 3;
     if( x < 0) {
       x = 340
       contFase -= 1
@@ -385,12 +386,12 @@ function draw()
               ArrayMob.reverse()
           }
         }
-    }
-    if(x>260 && x<300 && y<300 && y>330)
-    {
-      vidas -= 1
-    }
-    rect(250, 260, 30, 40 )
+        if(contFase == 2 && x>260 && x<285 && y>270 && y<350)
+        {
+          vidas -= 1
+        }
+      }
+  
     } 
     if(contFase==3){
       image(cerca, -50, 250, 70, 30)
@@ -399,15 +400,11 @@ function draw()
     if(contFase==4){
       tela=5
     }
-    textSize(40);
-    text(vidas,10,10)
+    textSize(10);
+    text(vidas,10,350)
 
   //morte
-    if(vidas = vidas<1){
-      
-    }
-    if(vidas<0)
-    {
+    if(vidas<1){
       morrer()
     }
     }
@@ -415,14 +412,13 @@ function draw()
     if(tela==3){
       background(205, 150, 92);
       image(bdopt, 0, 0, 400, 400)
-      textSize(40);
+      textSize(20);
       fill(0, 0, 0)
-      text("Opções em desenvolvimento", 100,120);
+      text("Volume", 160,100);
       image(botao,10, 10, 80, 30)
-      text("Voltar", 25, 30);
-      
-}
-   
+      image(botao, 100, 120, 50, 50)  
+      image(botao, 250, 120, 50, 50)   
+      }
    //tela creditos  
     if(tela==4){
       background(105, 89, 205);
@@ -481,13 +477,14 @@ function draw()
 }
 //adicionar return pra resetar a morte
 function morrer(){
-  if(morte=true && morte != false && y<400){
+  if(morte=true && y<400){
     y += 4
+    text("Você morreu!", 180, 190)
   }else if(morte=false){
     y = chaoy
   }
-  text("Você morreu!", 180, 190)
 }
+
 function keyPressed() {
   if (keyCode === RIGHT_ARROW) {
     cutSceneEnd = true;
@@ -577,4 +574,16 @@ function mousePressed(){
          click.play()
         }
     }
+  if(tela==3){
+      if(mouseX>100 && mouseX<(150) && mouseY>120 && mouseY<(170))
+      {
+      volum -= 0.01
+      click.play()      
+      }
+      if(mouseX>250 && mouseX<(300) && mouseY>120 && mouseY<(170))
+      {
+      volum += 0.01
+      click.play()   
+      }
+  }
 }
